@@ -1,6 +1,10 @@
+import re
+
 latex_input_file_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\latex_form.tex"
 latex_output_file_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\edited_latex_form.tex"
 experience_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\experience_template.tex"
+education_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\education_template.tex"
+project_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\project_template.tex"
 
 def get_user_details():
     user_details = {
@@ -36,9 +40,67 @@ def get_user_details():
                 ]
             }
         ],
+        "EDUCATION": [
+            {
+                "DEGREE": "Master of Science in Computer Science",
+                "COLLEGE": "University of Maryland, Baltimore County",
+                "DURATION": "Aug 2018 - May 2020",
+                "GPA": "3.8/4.0",
+                "COURSES": "Java, Python, AWS, SQL, Machine Learning",
+            },
+            {
+                "DEGREE": "BTech in ECE",
+                "COLLEGE": "RVR&JCCE, India",
+                "DURATION": "Aug 2017 - Jul 2021",
+                "GPA": "9.02/10",
+                "COURSES": "Data Structures, Algorithms, Operating Systems, Computer Networks",
+            }
+        ],
+        "PROJECTS": [
+            {
+                "TITLE": "LLM-Powered Chatbot",
+                "DURATION": "Jan 2023 - Apr 2023",
+                "INTRODUCTION": "Developed a chatbot using LLMs for intelligent data processing and user interaction using python, flask, and AWS.",
+                "DESCRIPTION": [
+                    "Developed a chatbot using LLMs for intelligent data processing and user interaction.",
+                    "Integrated with RESTful APIs for real-time data retrieval and processing.",
+                    "Implemented CI/CD pipelines for automated deployment using Jenkins and Docker."
+                ]
+            },
+            {
+                "TITLE": "E-commerce Web Application",
+                "DURATION": "May 2022 - Aug 2022",
+                "INTRODUCTION": "Designed and developed a full-stack e-commerce application using Java, Spring Boot, and React.",
+                "DESCRIPTION": [
+                    "Designed and developed a full-stack e-commerce application using Java, Spring Boot, and React.",
+                    "Implemented RESTful APIs for product management, user authentication, and payment processing.",
+                    "Deployed the application on AWS using EC2 and RDS."
+                ]
+            }
+        ]
     }
 
     return user_details
+
+def escape_latex_special_chars(text: str) -> str:
+    latex_special_chars = {
+        '&': r'\&',
+        '%': r'\%',
+        '$': r'\$',
+        '#': r'\#',
+        '_': r'\_',
+        '{': r'\{',
+        '}': r'\}',
+        '~': r'\textasciitilde{}',
+        '^': r'\^{}',
+        '\\': r'\textbackslash{}',
+    }
+
+    return re.sub(
+        r'([&%$#_{}~^\\])',
+        lambda match: latex_special_chars[match.group()],
+        text
+    )
 
 def getFile(filename):
     with open(filename, 'r') as file:
@@ -79,12 +141,35 @@ def format_user_details_experience(user_details):
     user_details["EXPERIENCE"] = "\n".join(user_details["EXPERIENCE"])
     return user_details
 
+def format_user_details_education(user_details):
+
+    for i in range(len(user_details["EDUCATION"])):
+        user_details["EDUCATION"][i] = fillValues(user_details["EDUCATION"][i], education_template_path)
+
+    user_details["EDUCATION"] = "\n".join(user_details["EDUCATION"])
+    return user_details
+
+def format_user_details_projects(user_details):
+
+    for i in range(len(user_details["PROJECTS"])):
+        description ="\n".join([f"\item {desc}" for desc in user_details["PROJECTS"][i]["DESCRIPTION"]])
+        user_details["PROJECTS"][i]["DESCRIPTION"] = description
+
+        user_details["PROJECTS"][i] = fillValues(user_details["PROJECTS"][i], project_template_path)
+
+    user_details["PROJECTS"] = "\n".join(user_details["PROJECTS"])
+    return user_details
+
 if __name__ == "__main__":
     
     print("Getting User Details")
     user_details = get_user_details()
 
     user_details = format_user_details_experience(user_details)
+
+    user_details = format_user_details_education(user_details)
+
+    user_details = format_user_details_projects(user_details)
 
     print(user_details.keys())
     update_latex(user_details)
