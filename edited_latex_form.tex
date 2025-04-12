@@ -1,0 +1,147 @@
+\documentclass[a4paper,3pt]{article}
+
+\usepackage{parskip} 
+\usepackage{hologo}
+\usepackage{fontspec}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9, top=.1in, bottom=.1in]{geometry}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.42\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{-1pt}{1pt}{2pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\color[HTML]{110223}%{1C033C}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+% \usepackage{times}
+
+% For underline
+\usepackage[normalem]{ulem}
+
+\setmainfont{Arial}  % Set it to whatever you like
+
+\begin{document}
+
+
+% non-numbered pages
+\pagestyle{empty} 
+
+
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\color[HTML]{1C033C} \HugeSai Jetti \\[0.5pt]
+\\
+{\href{mailto: venkatj2@umbc.edu}{\raisebox{-0.05\height}{\faEnvelope} venkatj2@umbc.edu} $|$}
+{\href{tel:+12404575305}{\raisebox{-0.05\height}{\faMobile} +12404575305}  $|$}
+{\href{https://www.linkedin.com/in/sai-jetti}{\raisebox{-0.05\height}{\faLinkedin} https://www.linkedin.com/in/sai-jetti}}
+\end{tabularx}
+
+\section{Summary}
+Experienced in developing scalable backend systems, microservices, and cloud-based solutions using Java, Python, Golang, and AWS. Skilled in building RESTful APIs, optimizing system performance, automating deployments with Kubernetes and CI/CD, and integrating LLM-powered applications for intelligent data processing.
+
+%Experience
+\section{Experience}
+
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{{TechCorp}} \hfill  Jan 2020 - Present \\[2pt]
+\textbf{\textit{Software Engineer}}\ \hfill  \textit{Java, Spring Boot, AWS, SQL, RESTful API} \\[2pt]
+\begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt]
+        \item Developed and optimized RESTful APIs using Java (Spring Boot) to enhance data retrieval efficiency, reducing response time by 35%.
+\item Integrated AWS services such as S3, Lambda, and RDS to build scalable backend solutions and improve cloud adoption.
+\item Designed and implemented database schemas in PostgreSQL, improving data integrity and query performance by 40%.
+\item Implemented authentication and authorization using Spring Security and JWT, strengthening system security.
+\item Built event-driven microservices with Apache Kafka by implementing Spring Boot Kafka producers & consumers.
+\item Assisted in containerizing microservices using Docker and deploying them to AWS ECS, improving scalability.
+    \end{itemize}
+\end{minipage}
+\end{tabularx}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{{Data Inc.}} \hfill  Jun 2019 - Dec 2019 \\[2pt]
+\textbf{\textit{Intern}}\ \hfill  \textit{Python, Flask, MongoDB, Docker} \\[2pt]
+\begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt]
+        \item Developed a Flask-based web application for data visualization, improving user engagement by 50%.
+\item Implemented RESTful APIs for data retrieval and manipulation, enhancing system performance.
+\item Containerized the application using Docker for consistent deployment across environments.
+    \end{itemize}
+\end{minipage}
+\end{tabularx}
+
+% Education
+\section{Education}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\color[HTML]{1C033C} \textbf{UNIVERSITY OF MARYLAND,
+BALTIMORE COUNTY} & \hfill  May 12, 2025 \\
+\textbf{MS in Data Science} & \hfill \textit{\textbf{GPA: 4.0 /4.0}} \\
+\multicolumn{2}{@{}X@{}}{\textbf{Courses}: LLM(Transformers, RAG, Fine Tuning, Prompt Engineering), Big Data Processing, Machine Learning.}
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+ \textbf{RVR \& JC College of Engineering} & \hfill Jul 2017 - Jul 2021 \\
+ \textbf{Bachelor of Technology in Electronics and Communication Engineering} & \hfill \textit{\textbf{GPA: 9.02 /10}} \\
+\multicolumn{2}{@{}X@{}}{\textbf {Courses}: Analysis and Design of Algorithms, DataBase Design, Java Programming, Web Development, Data Structures, Object Oriented Programming, HDL Programming, Verilog.}
+\end{tabularx}
+
+\section{Projects}
+
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{Flight Management System} \hspace*{69ex} Nov 2024\\[2pt]
+\textbf{\textit{Backend Development for Booking and Managing Flights using Java, Spring Boot, Hibernate, MySQL}} \hfill\\[2pt]
+\begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt]
+        \item Designed and implemented RESTful APIs to support core functionalities, including flight booking, cancellation, schedule management, and user registration/login.
+\item Utilized Spring MVC for controller logic and Hibernate/JPA for object-relational mapping, efficient database interactions.
+\item Built role-based access controls, enabling administrators to manage flight schedules, airport information, and user data.
+\item Integrated real-time flight data from multiple airline carriers to provide up-to-date flight details and pricing for users.    
+    \end{itemize}
+    \end{minipage}
+\end{tabularx}
+
+
+\section{Technical Skills}
+\begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=1pt]
+\item \textbf{Languages}
+\hspace*{18.5ex}                  Java, SQL, Python, JavaScript, Go.
+\item \textbf{Frameworks and Packages}
+ \hspace*{4ex} Springboot, Angular, Mockito, MySQL, Neo4j, PostgreSQL, Scikit Learn, Pytorch.
+\item\textbf{Cloud and Databases}
+ \hspace*{9.2ex} AWS (SageMaker, Lambda, EC2), Snowflake, MySQL, MongoDB.
+ \item\textbf{Tools}
+ \hspace*{23.8ex} Gerrit, Git, Docker, Kubernetes, AWS, Linux, REST APIs, Postman, Jenkins.
+\item\textbf{Big Data and ETL Tools}
+ \hspace*{7.3ex} Apache Spark, Hadoop, kafka, Airflow, Apache Nifi, Pentaho.
+ \end{itemize}
+\end{document}

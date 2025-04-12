@@ -1,0 +1,123 @@
+\documentclass[a4paper,3pt]{article}
+
+\usepackage{parskip} 
+\usepackage{hologo}
+\usepackage{fontspec}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9, top=.1in, bottom=.1in]{geometry}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.42\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{-1pt}{1pt}{2pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\color[HTML]{110223}%{1C033C}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+% \usepackage{times}
+
+% For underline
+\usepackage[normalem]{ulem}
+
+\setmainfont{Arial}  % Set it to whatever you like
+
+\begin{document}
+
+
+% non-numbered pages
+\pagestyle{empty} 
+
+
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\color[HTML]{1C033C} \Huge{{NAME}} \\[0.5pt]
+\\
+{\href{mailto: {{MAILID}}}{\raisebox{-0.05\height}{\faEnvelope} {{MAILID}}} $|$}
+{\href{tel:+1{{PHONE}}}{\raisebox{-0.05\height}{\faMobile} +1{{PHONE}}}  $|$}
+{\href{{{LINKEDIN}}}{\raisebox{-0.05\height}{\faLinkedin} {{LINKEDIN}}}}
+\end{tabularx}
+
+\section{Summary}
+{{SUMMARY}}
+
+%Experience
+\section{Experience}
+
+{{EXPERIENCE}}
+
+% Education
+\section{Education}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\color[HTML]{1C033C} \textbf{UNIVERSITY OF MARYLAND,
+BALTIMORE COUNTY} & \hfill  May 12, 2025 \\
+\textbf{MS in Data Science} & \hfill \textit{\textbf{GPA: 4.0 /4.0}} \\
+\multicolumn{2}{@{}X@{}}{\textbf{Courses}: LLM(Transformers, RAG, Fine Tuning, Prompt Engineering), Big Data Processing, Machine Learning.}
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+ \textbf{RVR \& JC College of Engineering} & \hfill Jul 2017 - Jul 2021 \\
+ \textbf{Bachelor of Technology in Electronics and Communication Engineering} & \hfill \textit{\textbf{GPA: 9.02 /10}} \\
+\multicolumn{2}{@{}X@{}}{\textbf {Courses}: Analysis and Design of Algorithms, DataBase Design, Java Programming, Web Development, Data Structures, Object Oriented Programming, HDL Programming, Verilog.}
+\end{tabularx}
+
+\section{Projects}
+
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{Flight Management System} \hspace*{69ex} Nov 2024\\[2pt]
+\textbf{\textit{Backend Development for Booking and Managing Flights using Java, Spring Boot, Hibernate, MySQL}} \hfill\\[2pt]
+\begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt]
+        \item Designed and implemented RESTful APIs to support core functionalities, including flight booking, cancellation, schedule management, and user registration/login.
+\item Utilized Spring MVC for controller logic and Hibernate/JPA for object-relational mapping, efficient database interactions.
+\item Built role-based access controls, enabling administrators to manage flight schedules, airport information, and user data.
+\item Integrated real-time flight data from multiple airline carriers to provide up-to-date flight details and pricing for users.    
+    \end{itemize}
+    \end{minipage}
+\end{tabularx}
+
+
+\section{Technical Skills}
+\begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=1pt]
+\item \textbf{Languages}
+\hspace*{18.5ex}                  Java, SQL, Python, JavaScript, Go.
+\item \textbf{Frameworks and Packages}
+ \hspace*{4ex} Springboot, Angular, Mockito, MySQL, Neo4j, PostgreSQL, Scikit Learn, Pytorch.
+\item\textbf{Cloud and Databases}
+ \hspace*{9.2ex} AWS (SageMaker, Lambda, EC2), Snowflake, MySQL, MongoDB.
+ \item\textbf{Tools}
+ \hspace*{23.8ex} Gerrit, Git, Docker, Kubernetes, AWS, Linux, REST APIs, Postman, Jenkins.
+\item\textbf{Big Data and ETL Tools}
+ \hspace*{7.3ex} Apache Spark, Hadoop, kafka, Airflow, Apache Nifi, Pentaho.
+ \end{itemize}
+\end{document}
