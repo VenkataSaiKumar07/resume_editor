@@ -4,4 +4,4 @@ __pycache__/
 *.log
 *.aux
 .env
-.edited_latex_form.tex
+edited_latex_form.tex
