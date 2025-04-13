@@ -5,6 +5,7 @@ latex_output_file_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume
 experience_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\experience_template.tex"
 education_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\education_template.tex"
 project_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\project_template.tex"
+skills_template_path = r"C:\Users\Venkat\Study_Folder\PERSONAL_PROJECTS\resume_editor\resume_editor\skills_template.tex"
 
 def get_user_details():
     user_details = {
@@ -15,7 +16,7 @@ def get_user_details():
         "SUMMARY": "Experienced in developing scalable backend systems, microservices, and cloud-based solutions using Java, Python, Golang, and AWS. Skilled in building RESTful APIs, optimizing system performance, automating deployments with Kubernetes and CI/CD, and integrating LLM-powered applications for intelligent data processing.",
         "EXPERIENCE": [
             {
-                "ROLE": "Software Engineer",
+                "ROLE": "Software &Engineer",
                 "COMPANY": "TechCorp",
                 "DURATION": "Jan 2020 - Present",
                 "SKILLS": "Java, Spring Boot, AWS, SQL, RESTful API",
@@ -77,12 +78,19 @@ def get_user_details():
                     "Deployed the application on AWS using EC2 and RDS."
                 ]
             }
-        ]
+        ],
+        "SKILLS": {
+            "Languages": ["Java", "Python", "Golang", "JavaScript", "SQL"],
+            "Frameworks and Packages": ["Springboot", "Angular", "Mockito", "MySQL", "Neo4j", "PostgreSQL", "Scikit Learn", "Pytorch"],
+            "Cloud and Databases": ["AWS (SageMaker, Lambda, EC2)", "Snowflake", "MySQL", "MongoDB"],
+            "Tools": ["Gerrit", "Git", "Docker", "Kubernetes", "AWS", "Linux", "REST APIs", "Postman", "Jenkins"],
+            "Big Data and ETL Tools": ["Apache Spark", "Hadoop", "Kafka", "Airflow", "Apache Nifi", "Pentaho"]
+        },
     }
 
     return user_details
 
-def escape_latex_special_chars(text: str) -> str:
+def escape_latex_special_chars(text):
     latex_special_chars = {
         '&': r'\&',
         '%': r'\%',
@@ -91,13 +99,11 @@ def escape_latex_special_chars(text: str) -> str:
         '_': r'\_',
         '{': r'\{',
         '}': r'\}',
-        '~': r'\textasciitilde{}',
-        '^': r'\^{}',
-        '\\': r'\textbackslash{}',
     }
-
+    if('&' in text):
+        print(f"Escaping LaTeX special characters")
     return re.sub(
-        r'([&%$#_{}~^\\])',
+        r'([&%$#_{}])',
         lambda match: latex_special_chars[match.group()],
         text
     )
@@ -112,11 +118,13 @@ def writeFile(filename, content):
     with open(filename, 'w') as file:
         file.write(content)
 
-def fillValues(user_details, file_path):
+def fillValues(user_details, file_path, isLatexReady=False):
 
     lines = getFile(file_path)
 
     for placeholder, value in user_details.items():
+        if not isLatexReady:
+            value = escape_latex_special_chars(value)
         lines = lines.replace(f"{{{{{placeholder}}}}}", value)
 
     return lines
@@ -124,7 +132,7 @@ def fillValues(user_details, file_path):
 def update_latex(user_details):
     print("Updating LaTeX Resume")
 
-    lines = fillValues(user_details, latex_input_file_path)
+    lines = fillValues(user_details, latex_input_file_path, True)
 
     writeFile(latex_output_file_path, lines)
 
@@ -136,7 +144,7 @@ def format_user_details_experience(user_details):
         description ="\n".join([f"\item {desc}" for desc in user_details["EXPERIENCE"][i]["DESCRIPTION"]])
         user_details["EXPERIENCE"][i]["DESCRIPTION"] = description
     
-        user_details["EXPERIENCE"][i] = fillValues(user_details["EXPERIENCE"][i], experience_template_path)
+        user_details["EXPERIENCE"][i] = fillValues(user_details["EXPERIENCE"][i], experience_template_path, False)
 
     user_details["EXPERIENCE"] = "\n".join(user_details["EXPERIENCE"])
     return user_details
@@ -144,7 +152,7 @@ def format_user_details_experience(user_details):
 def format_user_details_education(user_details):
 
     for i in range(len(user_details["EDUCATION"])):
-        user_details["EDUCATION"][i] = fillValues(user_details["EDUCATION"][i], education_template_path)
+        user_details["EDUCATION"][i] = fillValues(user_details["EDUCATION"][i], education_template_path, False)
 
     user_details["EDUCATION"] = "\n".join(user_details["EDUCATION"])
     return user_details
@@ -155,9 +163,17 @@ def format_user_details_projects(user_details):
         description ="\n".join([f"\item {desc}" for desc in user_details["PROJECTS"][i]["DESCRIPTION"]])
         user_details["PROJECTS"][i]["DESCRIPTION"] = description
 
-        user_details["PROJECTS"][i] = fillValues(user_details["PROJECTS"][i], project_template_path)
+        user_details["PROJECTS"][i] = fillValues(user_details["PROJECTS"][i], project_template_path, False)
 
     user_details["PROJECTS"] = "\n".join(user_details["PROJECTS"])
+    return user_details
+
+def format_user_details_skills(user_details):
+    all_skills = []
+    for cateogry, skills in user_details["SKILLS"].items():
+        all_skills.append(fillValues({"CATEGORY": cateogry, "SKILLS": ", ".join(skills)}, skills_template_path, False))
+    user_details["SKILLS"] = "\n".join(all_skills)
+
     return user_details
 
 if __name__ == "__main__":
@@ -170,6 +186,8 @@ if __name__ == "__main__":
     user_details = format_user_details_education(user_details)
 
     user_details = format_user_details_projects(user_details)
+
+    user_details = format_user_details_skills(user_details)
 
     print(user_details.keys())
     update_latex(user_details)
